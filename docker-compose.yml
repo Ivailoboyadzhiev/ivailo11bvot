@@ -1,0 +1,28 @@
+
+
+services:
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_NAME=example_db
+      - DATABASE_USER=example_user
+      - DATABASE_PASSWORD=example_password
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: example_db
+      POSTGRES_USER: example_user
+      POSTGRES_PASSWORD: example_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
